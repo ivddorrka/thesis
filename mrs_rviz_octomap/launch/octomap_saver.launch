@@ -1,0 +1,41 @@
+<launch>
+
+  <arg name="LOGGER_DEBUG" default="$(optenv LOGGER_DEBUG false)" />
+
+  <arg name="UAV_NAME" default="uav11" />
+  <arg name="map_path" default="$(env HOME)/maps" />
+  <arg name="map_topic" default="/$(arg UAV_NAME)/octomap_server/octomap_global_binary" />
+  <arg name="octree_type" default="octree" />
+  <arg if="$(eval arg('octree_type') == 'octree')" name="class_name" value="mrs_octomap_tools/OctomapSaver" />
+  <arg if="$(eval arg('octree_type') == 'color_octree')" name="class_name" value="mrs_octomap_tools/ColorOctomapSaver" />
+
+  <env name="ROSCONSOLE_CONFIG_FILE" if="$(eval arg('LOGGER_DEBUG'))" value="$(find mrs_octomap_tools)/config/debug_verbosity.yaml" />
+
+    <!-- other args -->
+  <arg name="debug" default="false" />
+  <arg name="standalone" default="true" />
+
+  <arg     if="$(arg debug)" name="launch_prefix" value="debug_roslaunch" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+
+  <arg     if="$(eval arg('standalone') or arg('debug'))" name="nodelet" value="standalone" />
+  <arg unless="$(eval arg('standalone') or arg('debug'))" name="nodelet" value="load" />
+  <arg     if="$(eval arg('standalone') or arg('debug'))" name="nodelet_manager" value="" />
+  <arg unless="$(eval arg('standalone') or arg('debug'))" name="nodelet_manager" value="" />
+
+  <group ns="$(arg UAV_NAME)">
+
+    <node pkg="nodelet" type="nodelet" name="octomap_saver" args="$(arg nodelet) $(arg class_name) $(arg nodelet_manager)" output="screen">
+
+      <rosparam file="$(find mrs_octomap_tools)/config/octomap_saver.yaml" command="load" />
+
+      <param name="map_path" type="string" value="$(arg map_path)" />
+
+      <!-- topics in -->
+      <remap from="~octomap_in" to="$(arg map_topic)" />
+
+    </node>
+
+  </group>
+
+</launch>

@@ -1,0 +1,21 @@
+map:
+  # name: "organ_large.bt"
+  name: "default.ot"
+  # name: "forest_my.ot"
+  # name: "finals.ot"
+
+roi_default:
+
+  width: 80.0 # [m]
+  depth: 80.0 # [m]
+  height: 60.0 # [m]
+
+  x: 0.0 # [m]
+  y: 0.0 # [m]
+  z: 0.0 # [m]
+
+  move_step: 5.0 # [m]
+
+  resize_step: 5.0 # [m]
+
+free_above_ground_height: 20.0 # [m]

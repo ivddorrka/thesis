@@ -1,0 +1,5 @@
+height_map:
+        enabled: false
+
+colored_map:
+        enabled: true
