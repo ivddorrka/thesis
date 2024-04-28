@@ -1,0 +1,5 @@
+<library path="lib/libPointProcessor">    
+  <class name="point_processing/PointProcessor" type="point_processing::PointProcessor" base_class_type="nodelet::Nodelet">
+    <description>PointProcessor nodelet</description>
+  </class>
+</library>

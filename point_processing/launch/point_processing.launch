@@ -1,0 +1,52 @@
+<launch>
+
+  <!-- defines name of the namespace of the drone -->
+  <arg name="UAV_NAME" default="uav1" />
+
+  <!-- set to false if the nodelet should run under an external nodelet manager -->
+  <arg name="standalone" default="true" />
+
+  <!-- allows disabling the gui from command line -->
+  <arg name="gui" default="true" />
+
+  <!-- will it run using GNU debugger? -->
+  <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix_debug" value=""/>
+  <arg     if="$(arg debug)" name="launch_prefix_debug" value="debug_roslaunch"/>
+
+  <!-- will it run as standalone nodelet or using a nodelet manager? -->
+  <arg     if="$(arg standalone)" name="nodelet" value="standalone"/>
+  <arg unless="$(arg standalone)" name="nodelet" value="load"/>
+  <arg     if="$(arg standalone)" name="nodelet_manager" value=""/>
+  <arg unless="$(arg standalone)" name="nodelet_manager" value="$(arg manager)"/>
+  <param name="enable_core_dumps" value="true"/>
+<!--  -->
+  <!-- <group ns="$(arg UAV_NAME)"> -->
+
+  <node pkg="nodelet" type="nodelet" name="point_processing" args="$(arg nodelet) point_processing/PointProcessor $(arg nodelet_manager)" launch-prefix="$(arg launch_prefix_debug)" output="screen">
+
+    <!-- Parameters loaded from launch file -->
+    <param name="gui" type="bool" value="$(arg gui)"/>
+
+    <param name="UAV_NAME" type="string" value="$(arg UAV_NAME)"/>
+
+    <param name="camera_info_in" type="string" value="/uav11/rgbd/color/camera_info"/>
+    <param name="raw_image" type="string" value="/uav11/rgbd/color/image_raw"/>
+    <param name="classed_image" type="string" value="/uav11/front_rgbd/image_classed"/>
+    <!-- /uav1/octomap_local_vis/octomap_point_cloud_centers -->
+    <param name="pcld_topic" type="string" value="/uav11/os_cloud_nodelet/points"/>
+    <!-- <param name="pcld_topic" type="string" value="/uav1/pcl_filter_ouster/points_processed"/> -->
+    <!-- /uav1/pcl_filter_ouster/points_processed -->
+    <!-- <param name="pcld_topic" type="string" value="/uav11/octomap_local_vis/octomap_point_cloud_centers"/> -->
+    <param name="pub_pnt_cld_topic" type="string" value="/uav11/point_cloud/classed"/>
+    <param name="world_origin" type="string" value="/uav11/common_origin"/>
+
+    <!-- lidar_modified_pub_pnt_cld_topic -->
+    <!-- pnt_cld_topic -->
+
+
+  </node>
+
+  <!-- </group> -->
+
+</launch>

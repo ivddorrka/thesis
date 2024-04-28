@@ -1,0 +1,19 @@
+<!-- image_modemask_processor_launch.launch -->
+
+<launch>
+
+  <param name="/image_modemask_processor/model_file" type="string" value="$(find image_modemask_processor)/src/trained_model_epoch675.pth"/>
+  <param name="/image_modemask_processor/camera_info_topic" type="string" value="/uav11/rgbd/color/camera_info"/>
+  <param name="/image_modemask_processor/image_raw_topic" type="string" value="/uav11/rgbd/color/image_raw"/>
+  <param name="/image_modemask_processor/point_cloud_topic" type="string" value="/uav11/octomap_local_vis/octomap_point_cloud_centers"/>
+
+  <!-- Set the UAV ID -->
+  <param name="/image_modemask_processor/uav_id" type="string" value="uav11"/>
+  <param name="filter_number" type="string" value="none"/>
+
+
+  <!-- Launch your node -->
+  <node name="point_processor_node" pkg="image_modemask_processor" type="image_pub_processor.py" output="screen"/>
+
+</launch>
+

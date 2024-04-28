@@ -1,0 +1,3 @@
+type is point_processing//PointProcessor
+type is point_processing/PointProcessor
+[0m[ INFO] [1707394276.755790365, 2417.984000000]: My uav name: [0m
