@@ -1,0 +1,5 @@
+<library path="lib/libMrsOctomapServer_Server">
+  <class name="mrs_octomap_server/MrsOctomapServer" type="mrs_octomap_server::OctomapServer" base_class_type="nodelet::Nodelet">
+    <description>MrsOctomapServer nodelet</description>
+  </class>
+</library>
